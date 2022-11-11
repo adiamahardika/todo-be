@@ -13,6 +13,7 @@ func main() {
 	} else {
 		fmt.Println("Connection to db succeed!")
 	}
+	database.AutoMigrateMysql(db)
 
 	router.Router(db)
 }
