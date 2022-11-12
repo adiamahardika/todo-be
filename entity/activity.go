@@ -6,6 +6,6 @@ import (
 
 type Activity struct {
 	gorm.Model
-	Title string `json:"title"`
-	Email string `json:"email"`
+	Title string `json:"title" gorm:"type:varchar(255)"`
+	Email string `json:"email" gorm:"type:varchar(255)"`
 }
