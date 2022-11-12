@@ -33,6 +33,10 @@ func Router(db *gorm.DB) {
 	todo := router.Group("/todo-items")
 	{
 		todo.POST("/", todoController.CreateTodo)
+		todo.GET("/", todoController.GetTodo)
+		todo.GET("/:id", todoController.GetOneTodo)
+		todo.DELETE("/:id", todoController.DeleteTodo)
+		todo.PATCH("/:id", todoController.UpdateTodo)
 	}
 	router.Run(":3030")
 }
