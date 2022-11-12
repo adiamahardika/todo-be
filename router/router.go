@@ -18,6 +18,9 @@ func Router(db *gorm.DB) {
 	activityService := service.ActivityService(repository)
 	activityController := controller.ActivityController(activityService)
 
+	todoService := service.TodoService(repository)
+	todoController := controller.TodoController(todoService)
+
 	activity := router.Group("/activity-groups")
 	{
 		activity.POST("/", activityController.CreateActivity)
@@ -25,6 +28,11 @@ func Router(db *gorm.DB) {
 		activity.GET("/:id", activityController.GetOneActivity)
 		activity.DELETE("/:id", activityController.DeleteActivity)
 		activity.PATCH("/:id", activityController.UpdateActivity)
+	}
+
+	todo := router.Group("/todo-items")
+	{
+		todo.POST("/", todoController.CreateTodo)
 	}
 	router.Run(":3030")
 }
