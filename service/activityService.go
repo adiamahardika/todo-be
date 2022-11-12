@@ -9,6 +9,7 @@ import (
 type ActivityServiceInterface interface {
 	CreateActivity(request *entity.Activity) (entity.Activity, error)
 	GetActivity() ([]entity.Activity, error)
+	GetOneActivity(id string) (entity.Activity, error)
 }
 
 type activityService struct {
@@ -31,5 +32,11 @@ func (service *activityService) CreateActivity(request *entity.Activity) (entity
 func (service *activityService) GetActivity() ([]entity.Activity, error) {
 
 	return service.activityRepository.GetActivity()
+
+}
+
+func (service *activityService) GetOneActivity(id string) (entity.Activity, error) {
+
+	return service.activityRepository.GetOneActivity(id)
 
 }

@@ -7,6 +7,7 @@ import (
 type ActivityRepositoryInterface interface {
 	CreateActivity(request *entity.Activity) (entity.Activity, error)
 	GetActivity() ([]entity.Activity, error)
+	GetOneActivity(id string) (entity.Activity, error)
 }
 
 func (repo *repository) CreateActivity(request *entity.Activity) (entity.Activity, error) {
@@ -21,6 +22,14 @@ func (repo *repository) GetActivity() ([]entity.Activity, error) {
 	var activities []entity.Activity
 
 	error := repo.db.Find(&activities).Error
+
+	return activities, error
+}
+
+func (repo *repository) GetOneActivity(id string) (entity.Activity, error) {
+	var activities entity.Activity
+
+	error := repo.db.First(&activities, id).Error
 
 	return activities, error
 }

@@ -78,3 +78,29 @@ func (controller *activityController) GetActivity(context *gin.Context) {
 
 	context.JSON(http_status, response)
 }
+
+func (controller *activityController) GetOneActivity(context *gin.Context) {
+
+	id := context.Param("id")
+	http_status := http.StatusOK
+	var response *model.StandardResponse
+
+	result, error := controller.activityService.GetOneActivity(id)
+
+	if error == nil {
+		http_status = http.StatusCreated
+		response = &model.StandardResponse{
+			Status:  general.SuccessMessage,
+			Message: general.SuccessMessage,
+			Data:    result,
+		}
+	} else {
+		http_status = http.StatusBadRequest
+		response = &model.StandardResponse{
+			Status:  error.Error(),
+			Message: error.Error(),
+		}
+	}
+
+	context.JSON(http_status, response)
+}

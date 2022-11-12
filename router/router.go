@@ -22,6 +22,7 @@ func Router(db *gorm.DB) {
 	{
 		activity.POST("/", activityController.CreateActivity)
 		activity.GET("/", activityController.GetActivity)
+		activity.GET("/:id", activityController.GetOneActivity)
 	}
 	router.Run(":3030")
 }
