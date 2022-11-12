@@ -10,6 +10,7 @@ type ActivityServiceInterface interface {
 	CreateActivity(request *entity.Activity) (entity.Activity, error)
 	GetActivity() ([]entity.Activity, error)
 	GetOneActivity(id string) (entity.Activity, error)
+	DeleteActivity(id string) error
 }
 
 type activityService struct {
@@ -38,5 +39,11 @@ func (service *activityService) GetActivity() ([]entity.Activity, error) {
 func (service *activityService) GetOneActivity(id string) (entity.Activity, error) {
 
 	return service.activityRepository.GetOneActivity(id)
+
+}
+
+func (service *activityService) DeleteActivity(id string) error {
+
+	return service.activityRepository.DeleteActivity(id)
 
 }
