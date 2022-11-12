@@ -24,6 +24,7 @@ func Router(db *gorm.DB) {
 		activity.GET("/", activityController.GetActivity)
 		activity.GET("/:id", activityController.GetOneActivity)
 		activity.DELETE("/:id", activityController.DeleteActivity)
+		activity.PATCH("/:id", activityController.UpdateActivity)
 	}
 	router.Run(":3030")
 }

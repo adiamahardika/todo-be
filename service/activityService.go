@@ -3,14 +3,14 @@ package service
 import (
 	"svc-todo/entity"
 	"svc-todo/repository"
-	"time"
 )
 
 type ActivityServiceInterface interface {
 	CreateActivity(request *entity.Activity) (entity.Activity, error)
 	GetActivity() ([]entity.Activity, error)
-	GetOneActivity(id string) (entity.Activity, error)
-	DeleteActivity(id string) error
+	GetOneActivity(id *string) (entity.Activity, error)
+	DeleteActivity(id *string) error
+	UpdateActivity(request *entity.Activity, id *string) (entity.Activity, error)
 }
 
 type activityService struct {
@@ -22,10 +22,6 @@ func ActivityService(activityRepository repository.ActivityRepositoryInterface) 
 }
 
 func (service *activityService) CreateActivity(request *entity.Activity) (entity.Activity, error) {
-	now := time.Now()
-
-	request.CreatedAt = now
-	request.UpdatedAt = now
 
 	return service.activityRepository.CreateActivity(request)
 }
@@ -36,14 +32,19 @@ func (service *activityService) GetActivity() ([]entity.Activity, error) {
 
 }
 
-func (service *activityService) GetOneActivity(id string) (entity.Activity, error) {
+func (service *activityService) GetOneActivity(id *string) (entity.Activity, error) {
 
 	return service.activityRepository.GetOneActivity(id)
 
 }
 
-func (service *activityService) DeleteActivity(id string) error {
+func (service *activityService) DeleteActivity(id *string) error {
 
 	return service.activityRepository.DeleteActivity(id)
 
+}
+
+func (service *activityService) UpdateActivity(request *entity.Activity, id *string) (entity.Activity, error) {
+
+	return service.activityRepository.UpdateActivity(request, id)
 }

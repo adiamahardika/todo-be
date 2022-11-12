@@ -86,7 +86,7 @@ func (controller *activityController) GetOneActivity(context *gin.Context) {
 	http_status := http.StatusOK
 	var response *model.StandardResponse
 
-	result, error := controller.activityService.GetOneActivity(id)
+	result, error := controller.activityService.GetOneActivity(&id)
 
 	if error == nil {
 		http_status = http.StatusOK
@@ -112,7 +112,7 @@ func (controller *activityController) DeleteActivity(context *gin.Context) {
 	http_status := http.StatusOK
 	var response *model.StandardResponse
 
-	error := controller.activityService.DeleteActivity(id)
+	error := controller.activityService.DeleteActivity(&id)
 
 	if error == nil {
 		http_status = http.StatusOK
@@ -125,6 +125,43 @@ func (controller *activityController) DeleteActivity(context *gin.Context) {
 		response = &model.StandardResponse{
 			Status:  general.NotFoundMessage,
 			Message: fmt.Sprintf("Activity with ID %s Not Found", id),
+		}
+	}
+
+	context.JSON(http_status, response)
+}
+
+func (controller *activityController) UpdateActivity(context *gin.Context) {
+
+	var request entity.Activity
+	id := context.Param("id")
+
+	error := context.ShouldBindJSON(&request)
+	http_status := http.StatusOK
+	var response *model.StandardResponse
+
+	if error != nil {
+		http_status = http.StatusBadRequest
+		response = &model.StandardResponse{
+			Status:  error.Error(),
+			Message: error.Error(),
+		}
+	} else {
+		request, error = controller.activityService.UpdateActivity(&request, &id)
+
+		if error == nil {
+			http_status = http.StatusOK
+			response = &model.StandardResponse{
+				Status:  general.SuccessMessage,
+				Message: general.SuccessMessage,
+				Data:    request,
+			}
+		} else {
+			http_status = http.StatusBadRequest
+			response = &model.StandardResponse{
+				Status:  error.Error(),
+				Message: error.Error(),
+			}
 		}
 	}
 
