@@ -18,7 +18,7 @@ func ActivityController(activityService service.ActivityServiceInterface) *activ
 	return &activityController{activityService}
 }
 
-func (controller *activityController) Create(context *gin.Context) {
+func (controller *activityController) CreateActivity(context *gin.Context) {
 
 	var request entity.Activity
 
@@ -48,6 +48,31 @@ func (controller *activityController) Create(context *gin.Context) {
 				Status:  error.Error(),
 				Message: error.Error(),
 			}
+		}
+	}
+
+	context.JSON(http_status, response)
+}
+
+func (controller *activityController) GetActivity(context *gin.Context) {
+
+	http_status := http.StatusOK
+	var response *model.StandardResponse
+
+	result, error := controller.activityService.GetActivity()
+
+	if error == nil {
+		http_status = http.StatusCreated
+		response = &model.StandardResponse{
+			Status:  general.SuccessMessage,
+			Message: general.SuccessMessage,
+			Data:    result,
+		}
+	} else {
+		http_status = http.StatusBadRequest
+		response = &model.StandardResponse{
+			Status:  error.Error(),
+			Message: error.Error(),
 		}
 	}
 

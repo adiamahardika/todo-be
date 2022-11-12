@@ -20,7 +20,8 @@ func Router(db *gorm.DB) {
 
 	activity := router.Group("/activity-groups")
 	{
-		activity.POST("/", activityController.Create)
+		activity.POST("/", activityController.CreateActivity)
+		activity.GET("/", activityController.GetActivity)
 	}
 	router.Run(":3030")
 }
