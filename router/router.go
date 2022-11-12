@@ -1,6 +1,10 @@
 package router
 
 import (
+	"svc-todo/controller"
+	"svc-todo/repository"
+	"svc-todo/service"
+
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -8,5 +12,15 @@ import (
 func Router(db *gorm.DB) {
 
 	router := gin.Default()
+
+	repository := repository.Repository(db)
+
+	activityService := service.ActivityService(repository)
+	activityController := controller.ActivityController(activityService)
+
+	activity := router.Group("/activity-groups")
+	{
+		activity.POST("/", activityController.Create)
+	}
 	router.Run(":3030")
 }
