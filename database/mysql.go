@@ -2,21 +2,19 @@ package database
 
 import (
 	"fmt"
-	"log"
 	"os"
 
 	"svc-todo/entity"
 
-	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
 func ConnectMysql() (*gorm.DB, error) {
-	error_env := godotenv.Load()
-	if error_env != nil {
-		log.Fatal("Error loading .env file")
-	}
+	// error_env := godotenv.Load()
+	// if error_env != nil {
+	// 	log.Fatal("Error loading .env file")
+	// }
 	host := os.Getenv("MYSQL_HOST")
 	user := os.Getenv("MYSQL_USER")
 	port := os.Getenv("MYSQL_PORT")

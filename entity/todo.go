@@ -13,6 +13,6 @@ type Todo struct {
 	DeletedAt       gorm.DeletedAt `json:"deleted_at"`
 	ActivityGroupId string         `json:"activity_group_id" form:"activity_group_id" gorm:"type:varchar(255)"`
 	Title           string         `json:"title" gorm:"type:varchar(255)"`
-	IsActive        string         `json:"is_active" gorm:"type:varchar(255);default:1"`
+	IsActive        bool           `json:"is_active,default=true" gorm:"type:boolean;default:true"`
 	Priority        string         `json:"priority" form:"priority" gorm:"type:varchar(255);default:very-high"`
 }

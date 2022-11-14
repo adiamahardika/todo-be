@@ -1,6 +1,8 @@
 package repository
 
-import "svc-todo/entity"
+import (
+	"svc-todo/entity"
+)
 
 type TodoRepositoryInterface interface {
 	CreateTodo(request *entity.Todo) (entity.Todo, error)
@@ -45,7 +47,7 @@ func (repo *repository) DeleteTodo(id *string) error {
 func (repo *repository) UpdateTodo(request *entity.Todo, id *string) (entity.Todo, error) {
 	var todo entity.Todo
 
-	error := repo.db.Model(&todo).Where("id = ?", id).Updates(request).Find(&todo).Error
+	result := repo.db.First(&todo).Save(request)
 
-	return todo, error
+	return todo, result.Error
 }
